@@ -31,7 +31,7 @@ class FileStorage:
             serialized_obj_dicts[obj] = stored_objects[obj].to_dict()       # serializing object to dict
 
         with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
-            json.dump(serialized_obj_dicts, file)                           # serializing converted obj dict to JSON
+            json.dump(serialized_obj_dicts, file, indent=2)                           # serializing converted obj dict to JSON
 
     def reload(self):
         """ deserializes JSON file to __objects only if JSON file exist ie '__file_path'
