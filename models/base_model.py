@@ -10,12 +10,22 @@ from datetime import datetime
 class BaseModel(cmd.Cmd):
     """ This is the command interpreter class"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """ initializes both instance and inherited attributes """
-        super().__init__()
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                elif key == "created_at" or key == "updated_at":
+                    setattr(self, key, datetime.strptime(value, time_format))
+                else:
+                    setattr(self, key, value)
+        else:
+            super().__init__()
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
     def __str__(self):
         """ outputs in the string format. this method is called by either str or print """
