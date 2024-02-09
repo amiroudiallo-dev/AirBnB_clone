@@ -1,17 +1,14 @@
 #!/usr/bin/python3
 
-""" This contains Airbnb base class upon which other class inherit from """
-
-import cmd
 import uuid
 from datetime import datetime
+import models
 
-
-class BaseModel(cmd.Cmd):
-    """ This is the command interpreter class"""
+class BaseModel:
+    """ This contains Airbnb base class upon which other classes inherit from """
 
     def __init__(self, *args, **kwargs):
-        """ initializes both instance and inherited attributes """
+        """ Initializes both instance and inherited attributes """
         time_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for key, value in kwargs.items():
@@ -22,21 +19,23 @@ class BaseModel(cmd.Cmd):
                 else:
                     setattr(self, key, value)
         else:
-            super().__init__()
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
 
+        models.storage.new(self)
+
     def __str__(self):
-        """ outputs in the string format. this method is called by either str or print """
+        """ Outputs in the string format. This method is called by either str or print """
         return f"[{__class__.__name__}], ({self.id}), {self.__dict__}"
 
     def save(self):
         """ This method saves the updated_at attribute with the current date """
-        self.updated_at = datetime.utcnow
+        self.updated_at = datetime.utcnow()
+        models.storage.save()
 
     def to_dict(self):
-        """ This function returns a contain keys/values of the object instance """
+        """ This function returns a dictionary containing keys/values of the object instance """
         obj_dict = self.__dict__.copy()
         obj_dict["__class__"] = self.__class__.__name__
         obj_dict["created_at"] = self.created_at.isoformat()
@@ -57,4 +56,13 @@ if __name__ == "__main__":
     print("JSON of my_model:")
     for key in my_model_json.keys():
         print("\t{}: ({}) - {}".format(key, type(my_model_json[key]), my_model_json[key]))
+
+    print("--")
+    my_new_model = BaseModel(**my_model_json)
+    print(my_new_model.id)
+    print(my_new_model)
+    print(type(my_new_model.created_at))
+
+    print("--")
+    print(my_model is my_new_model)
 
