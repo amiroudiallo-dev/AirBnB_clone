@@ -9,6 +9,10 @@
 
 # AirBnB Clone Project
 ## Part 1 - command interpreter
+### Description:
+AirBnB is a complete web application, integrating database storage(not yet implemented), a back-end API((not yet implemented), and front-end((not yet implemented) interfacing in a clone of AirBnB.
+
+The project currently only implements the back-end console.
 ### This project will entail:
 * Putting in place a parent class (called `BaseModel`) to take care of the initialization, serialization and deserialization of future instances
 * Creating a simple flow of serialization/deserialization: Instance <-> Dictionary <-> JSON string <-> file
