@@ -1,10 +1,15 @@
-# AirBnB clone - The console
+## AirBnb_clone
+### Description
 
-## Description
+This project is a command-line interpreter designed to perform various tasks efficiently. It provides a user-friendly interface for executing commands and managing the system.
+Command Interpreter
 
- ALX AirBnB Clone Software Engineer Project.
-This is the first step towards building your first full web application: the AirBnB clone. This first step is very important because you will use what you build during this project with all other following projects: HTML/CSS templating, database storage, API, front-end integration
+### How to Start
 
-## Usage
+To start the command interpreter, follow these steps:
 
-The following code example will guild you on how to run the the console.
+Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/your-username/project.git
+
