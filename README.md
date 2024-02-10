@@ -2,7 +2,7 @@
   <img src="https://github.com/amiroudiallo-dev/AirBnB_clone/blob/master/asset/AirBnb.png" alt="AirBnB logo">
 </p>
 
-<h1 align="center">HolbertonBnB</h1>
+<h1 align="center">AirBnB_clone</h1>
 <p align="center">An AirBnB clone.</p>
 
 ---
