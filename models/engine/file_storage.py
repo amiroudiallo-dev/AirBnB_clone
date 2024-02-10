@@ -1,79 +1,54 @@
 #!/usr/bin/python3
-"""
-    Define class FileStorage Module
-"""
+""" This module stores the base model objects create """
+
+import os
 import json
-import models
+from models.base_model import BaseModel
 
 
 class FileStorage:
-    """
-        Serializes instances to JSON file and deserializes to JSON file.
-    """
-    __file_path = "file.json"
-    __objects = {}
+    """ serializes instance to a JSON file and deserializes JSON file to instance """
+    __file_path = "file.json"               # path to JSON file
+    __objects = {}                          # dict that stores all obj by class id
 
     def all(self):
-        """
-            Return the dictionary
-        """
-        return self.__objects
+        """ returns the __objects dict used to store objects """
+
+        return FileStorage.__objects
 
     def new(self, obj):
-        """
-        Set new obj into __objects
-        """
-        key = str(obj.__class__.__name__) + "." + str(obj.id)
-        value_dict = obj
-        FileStorage.__objects[key] = value_dict
+        """ adds objects to the __objects dictionary for storage """
+        obj_class = obj.__class__.__name__                              # retrieves the object class name
+        key = f"{obj_class}.{obj.id}"                                   # concat class name with obj id t
+        FileStorage.__objects[key] = obj                                # adds the object to dict using the concat key
 
     def save(self):
-        """
-        Serializes the objects into JSON file
-        """
-        objects_dict = {}
-        for key, val in FileStorage.__objects.items():
-            objects_dict[key] = val.to_dict()
+        """ serializes __objects to JSON file i.e file.json """
+        stored_objects = FileStorage.__objects
+        serialized_obj_dicts = {}                                           # stores serialized objects
 
-        with open(FileStorage.__file_path, mode='w', encoding="UTF8") as fd:
-            json.dump(objects_dict, fd)
+        for obj in stored_objects.keys():
+            serialized_obj_dicts[obj] = stored_objects[obj].to_dict()       # serializing object to dict
+
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
+            json.dump(serialized_obj_dicts, file, indent=2)                           # serializing converted obj dict to JSON
 
     def reload(self):
+        """ deserializes JSON file to __objects only if JSON file exist ie '__file_path'
+            otherwise, do nothing. if the file doesn't exist.
         """
-        Reload the file and deserializes JSON into __objects
-        """
+        if os.path.isfile(FileStorage.__file_path):
+            with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
+                try:
+                    stored_objects = json.load(file)                                    # stored_objects in python
+                    for key, value in stored_objects.items():
 
-        try:
-            with open(FileStorage.__file_path, encoding="UTF8") as fd:
-                FileStorage.__objects = json.load(fd)
-            for key, val in FileStorage.__objects.items():
-                class_name = val["__class__"]
-                class_name = models.classes[class_name]
-                FileStorage.__objects[key] = class_name(**val)
-        except FileNotFoundError:
-            pass
+                        obj_class, obj_id = key.split(".")                              # key = BaseModel.12323
 
+                        converted_class = eval(obj_class)                               # convert to class
+                        converted_instance = converted_class(**value)                   # instance created
+                        FileStorage.__objects[key] = converted_instance                 # add instance
+                except Exception:
+                    pass
 
-if __name__ == "__main__:
-
-    my_model = BaseModel()
-    my_model.name = "My First Model"
-    my_model.my_number = 89
-    print(my_model)
-    my_model.save()
-    print(my_model)
-    my_model_json = my_model.to_dict()
-    print(my_model_json)
-    print("JSON of my_model:")
-    for key in my_model_json.keys():
-        print("\t{}: ({}) - {}".format(key, type(my_model_json[key]), my_model_json[key]))
-
-    print("--")
-    my_new_model = BaseModel(**my_model_json)
-    print(my_new_model.id)
-    print(my_new_model)
-    print(type(my_new_model.created_at))
-
-    print("--")
-    print(my_model is my_new_model)
 
