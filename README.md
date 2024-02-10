@@ -60,7 +60,7 @@ EOF  all  count  create  destroy  help  quit  show  update
 $
 ```
 
-Alternatively, to use the HolbertonBnB console in interactive mode, run the 
+Alternatively, to use the AirBnB console in interactive mode, run the 
 file `console.py` by itself:
 
 ```
@@ -91,7 +91,7 @@ $
 
 ### Console Commands
 
-The HolbertonBnB console supports the following commands:
+The AirBnB console supports the following commands:
 
 * **create**
   * Usage: `create <class>`
