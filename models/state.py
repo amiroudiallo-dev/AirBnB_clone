@@ -8,4 +8,3 @@ class State(BaseModel):
     All attrbutes should be empty
     """
     name = ""
-
