@@ -50,5 +50,3 @@ class FileStorage:
                         FileStorage.__objects[key] = converted_instance                 # add instance
                 except Exception:
                     pass
-
-
