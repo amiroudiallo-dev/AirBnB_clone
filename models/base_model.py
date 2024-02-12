@@ -5,8 +5,9 @@ import uuid
 from datetime import datetime
 import models
 
+
 class BaseModel:
-    """ This contains Airbnb base class upon which other classes inherit from """
+    """ This contains Airbnb base class inherit from """
 
     def __init__(self, *args, **kwargs):
         """ Initializes both instance and inherited attributes """
@@ -27,7 +28,7 @@ class BaseModel:
         models.storage.new(self)
 
     def __str__(self):
-        """ Outputs in the string format. This method is called by either str or print """
+        """ Outputs in the string format """
         return f"[{__class__.__name__}], ({self.id}), {self.__dict__}"
     
     def __repr__(self):
@@ -35,12 +36,12 @@ class BaseModel:
         return f"[{__class__.__name__}], ({self.id}), {self.__dict__}"
     
     def save(self):
-        """ This method saves the updated_at attribute with the current date """
+        """saves the updated_at attribute with the current date"""
         self.updated_at = datetime.utcnow()
         models.storage.save()
 
     def to_dict(self):
-        """ This function returns a dictionary containing keys/values of the object instance """
+        """serializes object to dictionary"""
         obj_dict = self.__dict__.copy()
         obj_dict["__class__"] = self.__class__.__name__
         obj_dict["created_at"] = self.created_at.isoformat()
@@ -70,4 +71,3 @@ if __name__ == "__main__":
 
     print("--")
     print(my_model is my_new_model)
-
