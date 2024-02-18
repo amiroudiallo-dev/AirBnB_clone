@@ -1,15 +1,20 @@
-/* global body */
-body {
-    background: #fff url('../images/logo.png') 20px center no-repeat;
-    border-bottom: 1px solid #ccc;
-    height: 70px;
-    width: 100%;
-}
+/*
+ * === Global style ===
+ */
 
-/* container */
-.container {
-    max-width: 1000px;
+/* Body style */
+body {
+    color: #484848;
+    font: 14px Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  
+  /* Container style */
+  .container {
     margin: 30px auto;
-    display: flex;
-    align-items: center;
-}
+    max-width: 1000px;
+  }
+  
+  /* Strong style */
+  strong {
+    font-weight: bold;
+  }
